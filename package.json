@@ -1,15 +1,24 @@
 {
-    "name": "library",
-    "version": "1.0.0",
-    "description": "",
-    "main": "app.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node app.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "express": "^4.13.3"
-    }
+  "name": "library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "gulp-jshint": "^2.0.0"
+  },
+  "devDependencies": {
+    "gulp": "3.9.0",
+    "gulp-jscs": "2.0.0",
+    "gulp-jshint": "2.0.0",
+    "jscs": "2.7.0",
+    "jshint": "2.8.0",
+    "jshint-stylish": "2.1.0"
+  }
 }
