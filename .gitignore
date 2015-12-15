@@ -1,2 +1,5 @@
 # NPM packages
 node_modules
+
+# Bower pacakges
+public/lib
