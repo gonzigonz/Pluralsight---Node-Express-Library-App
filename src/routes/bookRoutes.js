@@ -50,7 +50,7 @@ var books = [
 bookRouter.route('/')
     .get(function (req, res) {
         res.render('books', {
-            title: 'Hello from render',
+            title: 'Books',
             nav: [{
                 link: '/Books',
                 text: 'Books'
@@ -62,9 +62,20 @@ bookRouter.route('/')
         });
     });
 
-bookRouter.route('/Single')
+bookRouter.route('/:id')
     .get(function (req, res) {
-        res.send('Single Books page');
+        var id = req.params.id;
+        res.render('book', {
+            title: 'Book',
+            nav: [{
+                link: '/Books',
+                text: 'Books'
+            }, {
+                link: '/Authors',
+                text: 'Authors'
+            }],
+            book: books[id]
+        });
     });
 
 module.exports = bookRouter;
