@@ -1,6 +1,9 @@
 var express = require('express');
-var app = express();
+var bodyParser = require('body-parser');
+
 var sql = require('mssql');
+
+// SQL Config
 var config = {
     user: 'devuser',
     password: 'devpassword',
@@ -11,8 +14,7 @@ sql.connect(config, function (err) {
     console.log(err);
 });
 
-var port = process.env.PORT || 5000;
-
+// Navigation Object
 var nav = [{
     link: '/Books',
     text: 'Books'
@@ -21,33 +23,31 @@ var nav = [{
     text: 'Authors'
 }];
 
+// Routers
 var bookRouter = require('./src/routes/bookRoutes')(nav);
+var authRouter = require('./src/routes/authRoutes')(nav);
+
+// App Config
+var port = process.env.PORT || 5000;
+var app = express();
 
 app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use('/Books', bookRouter);
+app.use('/Auth', authRouter);
 
 app.set('views', './src/views');
-
 app.set('view engine', 'ejs');
-
-app.use('/Books', bookRouter);
 
 app.get('/', function (req, res) {
     res.render('index', {
         title: 'Hello from render',
-        nav: [{
-            link: '/Books',
-            text: 'Books'
-        }, {
-            link: '/Authors',
-            text: 'Authors'
-        }]
+        nav: nav
     });
 });
 
-app.get('/books', function (req, res) {
-    res.send('hello books');
-});
-
+// Start Website
 app.listen(port, function (err) {
     console.log('Running server on port ' + port);
 });
