@@ -2,16 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-
 var sql = require('mssql');
 
-// SQL Config
-var config = {
-    user: 'devuser',
-    password: 'devpassword',
-    server: '10.1.1.154',
-    database: 'DevSampleData'
-};
+// Connect to Database
+var config = require('./src/config/sql-conf');
 sql.connect(config, function (err) {
     console.log(err);
 });
