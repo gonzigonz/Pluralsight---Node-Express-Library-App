@@ -1,8 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var session = require('express-parser');
-var passport = require('passport');
+var session = require('express-session');
 
 var sql = require('mssql');
 
@@ -39,8 +38,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(session({secret: 'library'}));
-app.use(passport.initialize());
-app.use(passport.session());
+require('./src/config/passport')(app);
+
 app.use('/Books', bookRouter);
 app.use('/Auth', authRouter);
 
