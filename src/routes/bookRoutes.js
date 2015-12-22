@@ -22,8 +22,7 @@ var router = function (nav) {
         });
 
     bookRouter.route('/:id')
-        .get(function (req, res) {
-
+        .all(function (req, res, next) {
             var id = req.params.id;
             var preparedQuery = new sql.PreparedStatement();
 
@@ -35,16 +34,24 @@ var router = function (nav) {
                             Id: id
                         },
                         function (err, recordset) {
-                            res.render('bookView', {
-                                title: 'Book',
-                                nav: nav,
-                                book: recordset[0]
-                            });
+                            if (recordset === 0) {
+                                res.status(404).send('Not Found');
+                            } else {
+                                req.book = recordset[0];
+                                next();
+                            }
                         });
                 });
+        })
+        .get(function (req, res) {
+            res.render('bookView', {
+                title: 'Book',
+                nav: nav,
+                book: req.book
+            });
         });
-
     return bookRouter;
+
 };
 
 module.exports = router;
