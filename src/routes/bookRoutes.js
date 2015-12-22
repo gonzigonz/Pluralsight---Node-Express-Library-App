@@ -10,7 +10,8 @@ var router = function (nav) {
         .get(function (req, res) {
 
             var request = new sql.Request();
-            request.query('select * from books',
+            request.query(
+                'SELECT * FROM BOOKS',
                 function (err, recordset) {
                     res.render('bookListView', {
                         title: 'Books',
@@ -22,12 +23,25 @@ var router = function (nav) {
 
     bookRouter.route('/:id')
         .get(function (req, res) {
+
             var id = req.params.id;
-            res.render('bookView', {
-                title: 'Book',
-                nav: nav,
-                book: books[id]
-            });
+            var preparedQuery = new sql.PreparedStatement();
+
+            preparedQuery.input('Id', sql.Int);
+            preparedQuery.prepare(
+                'SELECT * FROM BOOKS WHERE ID = @Id',
+                function (err) {
+                    preparedQuery.execute({
+                            Id: id
+                        },
+                        function (err, recordset) {
+                            res.render('bookView', {
+                                title: 'Book',
+                                nav: nav,
+                                book: recordset[0]
+                            });
+                        });
+                });
         });
 
     return bookRouter;
