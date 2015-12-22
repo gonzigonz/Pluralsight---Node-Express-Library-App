@@ -34,7 +34,7 @@ var router = function (nav) {
                             Id: id
                         },
                         function (err, recordset) {
-                            if (recordset === 0) {
+                            if (recordset.length === 0) {
                                 res.status(404).send('Not Found');
                             } else {
                                 req.book = recordset[0];
