@@ -7,7 +7,11 @@ var sql = require('mssql');
 // Connect to Database
 var config = require('./src/config/sql-conf');
 sql.connect(config, function (err) {
-    console.log(err);
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Connection to SQL Server - Ok');
+    }
 });
 
 // Navigation Object
@@ -31,7 +35,9 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(session({secret: 'library'}));
+app.use(session({
+    secret: 'library'
+}));
 require('./src/config/passport')(app);
 
 app.use('/Books', bookRouter);
