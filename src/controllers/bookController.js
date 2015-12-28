@@ -46,11 +46,20 @@ var bookController = function (bookService, nav) {
     };
 
     var getById = function (req, res) {
-        res.render('bookView', {
-            title: 'Book',
-            nav: nav,
-            book: req.book
-        });
+
+        var vm = req.book;
+
+        bookService.getBookById(vm.Id,
+            function (err, book) {
+                vm.book = book;
+                res.render('bookView', {
+                    title: 'Book',
+                    nav: nav,
+                    vm: vm
+                });
+
+            });
+
     };
 
     return {
