@@ -4,7 +4,6 @@ var sql = require('mssql');
 var bookRouter = express.Router();
 
 var router = function (nav) {
-    var books = [];
 
     bookRouter.route('/')
         .get(function (req, res) {
