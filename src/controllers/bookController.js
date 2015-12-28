@@ -49,7 +49,7 @@ var bookController = function (bookService, nav) {
 
         var vm = req.book;
 
-        bookService.getBookById(vm.Id,
+        bookService.getBookById(vm.GoodReadsId,
             function (err, book) {
                 vm.book = book;
                 res.render('bookView', {
