@@ -1,5 +1,6 @@
 var express = require('express');
 var sql = require('mssql');
+var passport = require('passport');
 
 var authRouter = express.Router();
 
@@ -40,6 +41,13 @@ var router = function () {
                             }
                         });
                 });
+        });
+
+    authRouter.route('/signIn')
+        .post(passport.authenticate('local', {
+            failureRedirect: '/'
+        }), function (req, res) {
+            res.redirect('/auth/profile');
         });
 
     authRouter.route('/profile')
